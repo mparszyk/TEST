@@ -152,21 +152,18 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // TUTAJ WKLEJ SWOJE DANE Z KONSOLI FIREBASE:
-        // TUTAJ WKLEJ SWOJE DANE Z KONSOLI FIREBASE:
         const firebaseConfig = {
-                apiKey: "AIzaSyC8CAxGEfwEKb9kawOU91qBnpFnvtuduD4",
-                authDomain: "ev-master-pro.firebaseapp.com",
-                projectId: "ev-master-pro",
-                storageBucket: "ev-master-pro.firebasestorage.app",
-                messagingSenderId: "197671821377",
-                appId: "1:197671821377:web:b41a067444814084d2a6c0"
+            apiKey: "AIzaSyC8CAxGEfwEKb9kawOU91qBnpFnvtuduD4",
+            authDomain: "ev-master-pro.firebaseapp.com",
+            projectId: "ev-master-pro",
+            storageBucket: "ev-master-pro.firebasestorage.app",
+            messagingSenderId: "197671821377",
+            appId: "1:197671821377:web:b41a067444814084d2a6c0"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = 'ev-master-stable-v1';
 
         let user = null;
         const inputs = ['batCapacity', 'startPct', 'targetPct', 'volts', 'amps', 'phases', 'consumption'];
@@ -238,6 +235,7 @@
         };
 
         function loadCars() {
+            if (!user) return;
             const carsCol = collection(db, 'users', user.uid, 'cars');
             onSnapshot(carsCol, (snapshot) => {
                 const list = document.getElementById('savedCarsList');
